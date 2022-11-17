@@ -1,0 +1,54 @@
+name: Django Testing and Deploy
+
+#Указываем при каких условиях срабатывает workflow
+on:
+  push:
+    branches: [master]
+
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    env:
+      POSTGRES_USER: adilet
+      POSTGRES_PASS: some_password
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: cicd_test
+      SECRET_KEY: django-insecure-c-1%_g181t6@a=ww4nyu55!3_t#b&efh2p7)^d)raewqow!68%
+      ALLOWED_HOSTS: localhost,127.0.0.1
+    services:
+      postgres_main:
+        image: postgres:12
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASS }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options:
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Проверяем репозиторий на наличие изменений
+        uses: actions/checkout@v2
+
+      - name: Установка python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Установка библиотек
+        run: pip install -r requirements.txt
+
+      - name: Линтинг кода
+        run: flake8 main
+
+      - name: Деплой
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: cd /home/adilet/url_shortener && touch 1.txt
