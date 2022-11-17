@@ -45,10 +45,23 @@ jobs:
       - name: Линтинг кода
         run: flake8 main
 
-      - name: Деплой
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          password: ${{ secrets.PASSWORD }}
-          script: expect /home/adilet/url_shortener/pull.exp
+      - name: Тестинг
+         run: python manage.py test
+         env:
+           SECRET_KEY: ${{ env.SECRET_KEY }}
+           DEBUG: "0"
+           ALLOWED_HOSTS: ${{ env.ALLOWED_HOSTS }}
+           DB_ENGINE: django.db.backends.postgresql
+           DB_NAME: ${{ env.POSTGRES_DB }}
+           DB_USER: ${{ env.POSTGRES_USER }}
+           DB_PASSWORD: ${{ env.POSTGRES_PASS }}
+           DB_HOST: ${{ env.POSTGRES_HOST }}
+           DB_PORT: ${{ env.POSTGRES_PORT }}
+
+#      - name: Деплой
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          password: ${{ secrets.PASSWORD }}
+#          script: expect /home/adilet/url_shortener/pull.exp
