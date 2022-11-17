@@ -42,7 +42,7 @@ jobs:
       - name: Установка библиотек
         run: pip install -r requirements.txt
 
-       - name: Линтинг кода
+      - name: Линтинг кода
          run: flake8 main
 
       - name: Деплой
