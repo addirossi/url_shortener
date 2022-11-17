@@ -43,7 +43,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Линтинг кода
-         run: flake8 main
+        run: flake8 main
 
       - name: Деплой
         uses: appleboy/ssh-action@master
