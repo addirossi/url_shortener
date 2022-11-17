@@ -51,4 +51,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script: bash /home/adilet/url_shortener/pull.sh
+          script: expect /home/adilet/url_shortener/pull.exp
