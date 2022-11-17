@@ -1,4 +1,3 @@
-from multiprocessing import context
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
@@ -15,7 +14,7 @@ class IndexPage(View):
         form = self.form_class()
         self.context['form'] = form
         return render(request, self.template_name, context=self.context)
-        
+
     def post(self, request):
         form = self.form_class(request.POST)
         self.context['form'] = form

@@ -14,9 +14,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Shortener',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                                           primary_key=True,
+                                           serialize=False,
+                                           verbose_name='ID')),
                 ('full_url', models.URLField()),
-                ('short_url', models.CharField(blank=True, max_length=20, unique=True)),
+                ('short_url', models.CharField(blank=True,
+                                               max_length=20,
+                                               unique=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
             ],
         ),

@@ -42,8 +42,8 @@ jobs:
       - name: Установка библиотек
         run: pip install -r requirements.txt
 
-#       - name: Линтинг кода
-#         run: flake8 main
+       - name: Линтинг кода
+         run: flake8 main
 
       - name: Деплой
         uses: appleboy/ssh-action@master
@@ -51,4 +51,4 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          script: cd /home/adilet/url_shortener && touch 1.txt
+          script: bash /home/adilet/url_shortener/pull.sh

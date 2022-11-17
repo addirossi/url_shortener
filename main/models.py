@@ -1,4 +1,3 @@
-from random import random
 from string import ascii_letters, digits
 
 from django.utils.crypto import get_random_string
